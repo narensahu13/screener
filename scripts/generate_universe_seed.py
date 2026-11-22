@@ -374,12 +374,12 @@ def main() -> None:
     out = root / "data" / "universe.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf-8", newline="") as f:
-        f.write("symbol,name,isin,instrument_key,index\n")
+        f.write("symbol,name,isin,instrument_key,angel_token,index\n")
         for sym, name, isin, idx in rows:
             key = f"NSE_EQ|{isin}"
-            # quote name if needed
             safe_name = f'"{name}"' if "," in name else name
-            f.write(f"{sym},{safe_name},{isin},{key},{idx}\n")
+            # angel_token filled by refresh_universe.py --enrich-angel
+            f.write(f"{sym},{safe_name},{isin},{key},,{idx}\n")
     print(f"Wrote {len(rows)} symbols to {out}")
 
 

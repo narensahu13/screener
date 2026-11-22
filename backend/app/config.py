@@ -16,11 +16,21 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    data_source: Literal["mock", "upstox"] = "mock"
+    data_source: Literal["mock", "angelone", "upstox"] = "mock"
     universe_path: Path = ROOT / "data" / "universe.csv"
     historical_data_dir: Path = ROOT / "data" / "historical"
     strategies_dir: Path = ROOT / "backend" / "app" / "strategies"
 
+    # Angel One SmartAPI (recommended live path — daily TOTP login)
+    angel_api_key: str = ""
+    angel_client_code: str = ""
+    angel_password: str = ""  # trading PIN, not account password
+    angel_totp_secret: str = ""
+    angel_mac_address: str = "00:00:00:00:00:01"
+    angel_rest_base: str = "https://apiconnect.angelone.in"
+    angel_ws_url: str = "wss://smartapisocket.angelone.in/smart-stream"
+
+    # Upstox (optional adapter — Analytics Token)
     upstox_api_key: str = ""
     upstox_api_secret: str = ""
     upstox_access_token: str = ""

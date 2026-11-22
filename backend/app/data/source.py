@@ -32,6 +32,7 @@ class MarketDataSource(abc.ABC):
                     {
                         "symbol": row["symbol"].strip(),
                         "instrument_key": row.get("instrument_key", "").strip(),
+                        "angel_token": row.get("angel_token", "").strip(),
                         "name": row.get("name", row["symbol"]).strip(),
                         "isin": row.get("isin", "").strip(),
                         "index": row.get("index", "").strip(),
@@ -90,6 +91,10 @@ class MarketDataSource(abc.ABC):
 
 def create_data_source(settings: Settings | None = None) -> MarketDataSource:
     settings = settings or get_settings()
+    if settings.data_source == "angelone":
+        from app.data.angelone import AngelOneSource
+
+        return AngelOneSource(settings)
     if settings.data_source == "upstox":
         from app.data.upstox import UpstoxSource
 
